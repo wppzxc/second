@@ -5,9 +5,60 @@
     android:background="@android:color/white"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/shop_class"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:contentDescription="@null"
+            android:src="@drawable/shop_class_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/shop_title"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/shop_search"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:contentDescription="@null"
+            android:src="@drawable/shop_search_selector" >
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#BFBFBF" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/shop_lv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="shop" />
+        android:layout_weight="1" >
+    </ListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#BFBFBF" />
 
 </LinearLayout>

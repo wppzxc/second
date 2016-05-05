@@ -1,4 +1,4 @@
-package fragment;
+package com.second.fragment;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment {
 
 	@SuppressWarnings("unused")
-	private Context context;
+	public Context context;
 
 	@SuppressWarnings("deprecation")
 	@Override

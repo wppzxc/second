@@ -74,5 +74,6 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/second_self_selector" />
         </LinearLayout>
-    </LinearLayout>>
+    </LinearLayout>
+
 </LinearLayout>

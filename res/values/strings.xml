@@ -3,5 +3,6 @@
 
     <string name="app_name">second</string>
     <string name="action_settings">Settings</string>
+    <string name="shop_title">商品浏览</string>
 
 </resources>

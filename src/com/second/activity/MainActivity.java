@@ -1,9 +1,15 @@
 package com.second.activity;
 
+import cn.bmob.v3.Bmob;
+import android.app.Activity;
+import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.second.R;
+import com.second.fragment.FriendFragment;
+import com.second.fragment.SelfFragment;
+import com.second.fragment.ShopFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,9 +21,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import fragment.FriendFragment;
-import fragment.SelfFragment;
-import fragment.ShopFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -41,6 +44,7 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle saveInstanceState) {
 		super.onCreate(saveInstanceState);
+		Bmob.initialize(this, "efabecb6ea93f7cda3da00b7cbab75a9");
 		initViews();
 		initListeners();
 		if (saveInstanceState == null) {

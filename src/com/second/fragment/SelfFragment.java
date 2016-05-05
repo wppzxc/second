@@ -1,8 +1,8 @@
-package fragment;
+package com.second.fragment;
 
 import com.example.second.R;
 
-public class FriendFragment extends BaseFragment {
+public class SelfFragment extends BaseFragment {
 
 	@Override
 	protected void initParams() {
@@ -11,7 +11,7 @@ public class FriendFragment extends BaseFragment {
 	@Override
 	protected int getLayoutId() {
 
-		return R.layout.fragment_friend_main;
+		return R.layout.fragment_self_main;
 	}
 
 }
