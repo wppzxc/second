@@ -25,11 +25,13 @@ public class LocalApplication extends BaseApplication {
 		instance = this;
 		DisplayImageOptions options = new  DisplayImageOptions.Builder()
 				.cacheInMemory(true)
+				.cacheOnDisc(true)
 				.showImageOnLoading(R.drawable.empty_photo)
 				.showImageForEmptyUri(R.drawable.empty_photo)
 				.showImageOnFail(R.drawable.empty_photo).build();
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
 				.memoryCacheSize(2*1024*1024)
+				.discCacheSize(50*1024*1024)
 				.defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
 		
