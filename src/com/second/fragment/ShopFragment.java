@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.second.R;
+import com.second.adapter.ShopHeadAdaper;
 import com.second.adapter.ShopItemAdapter;
 import com.second.entity.item;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.GetListener;
 
 public class ShopFragment extends BaseFragment {
 
@@ -31,6 +31,10 @@ public class ShopFragment extends BaseFragment {
 	private LinearLayout loading_llyt;
 	private int pageSize = 20;
 	private int pageIndex = -1;
+
+	private FrameLayout shop_head_view;
+
+	private ViewPager shop_head_vp;
 
 	// 是否为最后一行
 	private boolean isLastRaw = false;
@@ -42,9 +46,13 @@ public class ShopFragment extends BaseFragment {
 	private boolean isLoading = false;
 
 	// 数据源
-	private List<item> myDatas = new ArrayList();
+	private List<item> myDatas = new ArrayList<item>();
+	
+	private List<item> headList = new ArrayList<item>();
 
 	private ShopItemAdapter adapter;
+	
+	private ShopHeadAdaper headAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,29 +66,67 @@ public class ShopFragment extends BaseFragment {
 
 	}
 
-	private void loadData() {
+	// 加载头部数据
+	private void loadHeadData()
+	{
+		BmobQuery<item> queryHead = new BmobQuery<item>();
+		queryHead.addWhereEqualTo("itemCLASS", "head");
+		queryHead.findObjects(getActivity(), new FindListener<item>() {
+
+			@Override
+			public void onSuccess(List<item> head) {
+				if(!head.isEmpty())
+				{
+					headList.addAll(head);
+					headAdapter.notifyDataSetChanged();
+					// 初始选中项
+					shop_head_vp.setCurrentItem(0);
+					
+				}
+			}
+			@Override
+			public void onError(int arg0, String arg1) {
+				
+			}
+			
+		});
+	}
+	
+	// 加载列表数据
+	private void loadListData() {
 		isLoading = true;
 		pageIndex++;
-		BmobQuery<item> query = new BmobQuery<item>();
-			
-		query.setLimit(pageSize);
-		query.setSkip(pageIndex * pageSize);
-		query.findObjects(getActivity(), new FindListener<item>() {
+		BmobQuery<item> queryList = new BmobQuery<item>();
+
+		queryList.setLimit(pageSize);
+		queryList.setSkip(pageIndex * pageSize);
+		queryList.addWhereNotEqualTo("itemCLASS", "head");
+		queryList.findObjects(getActivity(), new FindListener<item>() {
 
 			@Override
 			public void onSuccess(List<item> datas) {
 				if (!datas.isEmpty()) {
-					myDatas.addAll(datas);
-					if (adapter != null) {
-						adapter.notifyDataSetChanged();
-					} else {
-						shop_lv.setVisibility(View.VISIBLE);
-						adapter = new ShopItemAdapter(context, myDatas);
-						if (myDatas.size() >= pageSize) {
-							shop_lv.addFooterView(loading_llyt);
+//					myDatas.addAll(datas);
+//					if (adapter != null) {
+//						adapter.notifyDataSetChanged();
+//					} else {
+//						shop_lv.setVisibility(View.VISIBLE);
+//						adapter = new ShopItemAdapter(context, myDatas);
+//						if (myDatas.size() >= pageSize) {
+//							shop_lv.addFooterView(loading_llyt);
+//						}
+//						shop_lv.setAdapter(adapter);
+//					}
+					if(pageIndex == 0)
+					{
+						// 移除底部加载布局
+						if(datas.size()<pageSize)
+						{
+							shop_lv.removeFooterView(loading_llyt);
 						}
-						shop_lv.setAdapter(adapter);
 					}
+					myDatas.addAll(datas);
+					adapter.notifyDataSetChanged();
 				} else {
 					isMore = false;
 					shop_lv.removeFooterView(loading_llyt);
@@ -104,7 +150,26 @@ public class ShopFragment extends BaseFragment {
 		// 底部布局
 		loading_llyt = (LinearLayout) getLayoutInflater(null).inflate(R.layout.listview_loading_view, null);
 
-		loadData();
+		// 头部布局
+		shop_head_view = (FrameLayout) getLayoutInflater(null).inflate(R.layout.shop_head_view, null);
+		shop_head_vp = (ViewPager) shop_head_view.findViewById(R.id.shop_head_vp);
+		
+		// 初始化推荐图片
+		headAdapter = new ShopHeadAdaper(context, headList);
+		shop_head_vp.setAdapter(headAdapter);
+		
+		// 初始化列表
+		adapter = new ShopItemAdapter(context, myDatas);
+		// 增加头部布局
+		shop_lv.addHeaderView(shop_head_view);
+		// 增加底部布局
+		shop_lv.addFooterView(loading_llyt);
+		// 绑定适配器
+		shop_lv.setAdapter(adapter);
+		
+		// 加载数据
+		loadHeadData();
+		loadListData();
 		shop_lv.setOnScrollListener(new OnScrollListener() {
 
 			@Override
@@ -112,7 +177,7 @@ public class ShopFragment extends BaseFragment {
 
 				if (isLastRaw && scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
 					if (!isLoading && isMore) {
-						loadData();
+						loadListData();
 					}
 					isLastRaw = false;
 				}
