@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/empty_photo" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/shop_head_vp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:paddingBottom="10dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center" >
+
+            <ImageView
+                android:id="@+id/shop_tip1"
+                android:layout_width="20dp"
+                android:layout_height="10dp"
+                android:src="@drawable/shop_tip1_selector" />
+
+            <ImageView
+                android:id="@+id/shop_tip2"
+                android:layout_width="20dp"
+                android:layout_height="10dp"
+                android:src="@drawable/shop_tip2_selector" />
+
+            <ImageView
+                android:id="@+id/shop_tip3"
+                android:layout_width="20dp"
+                android:layout_height="10dp"
+                android:src="@drawable/shop_tip3_selector" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>
