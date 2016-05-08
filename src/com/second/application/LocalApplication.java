@@ -30,8 +30,8 @@ public class LocalApplication extends BaseApplication {
 				.showImageForEmptyUri(R.drawable.empty_photo)
 				.showImageOnFail(R.drawable.empty_photo).build();
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-				.memoryCacheSize(2*1024*1024)
-				.discCacheSize(50*1024*1024)
+				.memoryCacheSize(20*1024*1024)
+				.discCacheSize(100*1024*1024)
 				.defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
 		

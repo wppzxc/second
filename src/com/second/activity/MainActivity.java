@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
 		second_iv_friend = (ImageView) findViewById(R.id.second_iv_friend);
 		second_iv_self = (ImageView) findViewById(R.id.second_iv_self);
 		main_vp = (ViewPager) findViewById(R.id.main_vp);
-
+		main_vp.setOffscreenPageLimit(2);
 	}
 
 	// ¼àÌýÆ÷°ó¶¨
